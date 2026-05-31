@@ -19,6 +19,7 @@ publish/
 # Logs and temp files
 *.log
 *.tmp
+*.zip
 ui-smoke*.png
 
 # OS files
