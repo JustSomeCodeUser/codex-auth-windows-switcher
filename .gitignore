@@ -1,0 +1,26 @@
+# Build output
+bin/
+obj/
+dist/
+publish/
+
+# Local SDK/tooling
+.dotnet/
+.tools/
+
+# User/editor files
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and temp files
+*.log
+*.tmp
+ui-smoke*.png
+
+# OS files
+Thumbs.db
+Desktop.ini

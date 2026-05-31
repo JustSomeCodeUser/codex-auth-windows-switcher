@@ -1,0 +1,374 @@
+<Window x:Class="CodexAuthSwitcher.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Codex Auth Switcher"
+        Height="760"
+        Width="1240"
+        MinHeight="580"
+        MinWidth="1080"
+        WindowStartupLocation="Manual"
+        Left="80"
+        Top="80"
+        Loaded="Window_Loaded"
+        Background="{DynamicResource PageBrush}"
+        FontFamily="Segoe UI">
+    <Window.Resources>
+        <SolidColorBrush x:Key="PageBrush" Color="#F4F7FB" />
+        <SolidColorBrush x:Key="PanelBrush" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="SubtlePanelBrush" Color="#EDF3FA" />
+        <SolidColorBrush x:Key="BorderBrushSoft" Color="#D9E2EF" />
+        <SolidColorBrush x:Key="TextBrush" Color="#151B23" />
+        <SolidColorBrush x:Key="MutedTextBrush" Color="#647083" />
+        <SolidColorBrush x:Key="AccentBrush" Color="#2563EB" />
+        <SolidColorBrush x:Key="AccentHoverBrush" Color="#1D4ED8" />
+        <SolidColorBrush x:Key="RestartBrush" Color="#0F766E" />
+        <SolidColorBrush x:Key="RestartHoverBrush" Color="#0D9488" />
+        <SolidColorBrush x:Key="DangerBrush" Color="#DC2626" />
+        <SolidColorBrush x:Key="GridLineBrush" Color="#E5EAF2" />
+        <SolidColorBrush x:Key="LogBrush" Color="#111827" />
+        <SolidColorBrush x:Key="LogTextBrush" Color="#E5E7EB" />
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="Margin" Value="0,0,8,0" />
+            <Setter Property="MinWidth" Value="88" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource BorderBrushSoft}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.55" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource AccentHoverBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="RestartButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{DynamicResource RestartBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource RestartBrush}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource RestartHoverBrush}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource RestartHoverBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+            <Setter Property="Foreground" Value="{DynamicResource DangerBrush}" />
+        </Style>
+
+        <Style TargetType="ToggleButton">
+            <Setter Property="Padding" Value="14,8" />
+            <Setter Property="MinWidth" Value="112" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="6"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="{DynamicResource PanelBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="HorizontalGridLinesBrush" Value="{DynamicResource GridLineBrush}" />
+            <Setter Property="RowBackground" Value="{DynamicResource PanelBrush}" />
+            <Setter Property="AlternatingRowBackground" Value="{DynamicResource SubtlePanelBrush}" />
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource MutedTextBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Padding" Value="10,12" />
+            <Setter Property="BorderBrush" Value="{DynamicResource BorderBrushSoft}" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+        </Style>
+
+        <Style TargetType="DataGridCell">
+            <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10,0" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+                    <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style TargetType="DataGridRow">
+            <Setter Property="Background" Value="{DynamicResource PanelBrush}" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource SubtlePanelBrush}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0"
+                Padding="18"
+                Background="{DynamicResource PanelBrush}"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel>
+                <DockPanel LastChildFill="True">
+                    <Border DockPanel.Dock="Left"
+                            Width="56"
+                            Height="56"
+                            Margin="0,0,16,0"
+                            CornerRadius="12"
+                            Background="{DynamicResource SubtlePanelBrush}">
+                        <Image x:Name="HeaderLogo"
+                               Width="46"
+                               Height="46"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center" />
+                    </Border>
+                    <StackPanel>
+                        <TextBlock Text="Codex Auth Switcher"
+                                   FontSize="28"
+                                   FontWeight="SemiBold" />
+                        <TextBlock Text="Local desktop controls for the installed codex-auth CLI."
+                                   Margin="0,4,0,0"
+                                   Foreground="{DynamicResource MutedTextBrush}" />
+                    </StackPanel>
+                </DockPanel>
+
+                <WrapPanel Margin="0,16,0,0">
+                    <Border Background="{DynamicResource SubtlePanelBrush}"
+                            BorderBrush="{DynamicResource BorderBrushSoft}"
+                            BorderThickness="1"
+                            CornerRadius="6"
+                            Padding="12,8"
+                            Margin="0,0,10,0">
+                        <TextBlock x:Name="VersionText"
+                                   Text="Checking codex-auth..."
+                                   Foreground="{DynamicResource MutedTextBrush}" />
+                    </Border>
+                    <ToggleButton x:Name="ThemeToggle"
+                                  Content="Dark mode"
+                                  Checked="ThemeToggle_Changed"
+                                  Unchecked="ThemeToggle_Changed" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1"
+                Margin="0,16,0,16"
+                Padding="16"
+                Background="{DynamicResource PanelBrush}"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                CornerRadius="8">
+            <StackPanel>
+                <TextBlock Text="Current account"
+                           FontSize="13"
+                           Foreground="{DynamicResource MutedTextBrush}" />
+                <TextBlock x:Name="CurrentAccountText"
+                           Text="Loading..."
+                           Margin="0,5,0,0"
+                           FontSize="20"
+                           FontWeight="SemiBold" />
+                <TextBlock Text="Switching changes the local Codex auth target. Restart Codex App or reopen Codex CLI afterward."
+                           Margin="0,8,0,0"
+                           Foreground="{DynamicResource MutedTextBrush}"
+                           TextWrapping="Wrap" />
+                <WrapPanel Margin="0,16,0,0">
+                    <Button Content="Refresh"
+                            Style="{StaticResource PrimaryButton}"
+                            Click="Refresh_Click" />
+                    <Button Content="Add account"
+                            Click="AddAccount_Click"
+                            Margin="0,0,8,0" />
+                    <Button Content="Status"
+                            Click="Status_Click"
+                            Margin="0,0,8,0" />
+                    <Button Content="Restart Codex"
+                            Style="{StaticResource RestartButton}"
+                            Click="RestartCodex_Click"
+                            Margin="0,0,8,0" />
+                    <Button Content="Open .codex"
+                            Click="OpenCodexFolder_Click"
+                            Margin="0" />
+                </WrapPanel>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2"
+                Background="{DynamicResource PanelBrush}"
+                BorderBrush="{DynamicResource BorderBrushSoft}"
+                BorderThickness="1"
+                CornerRadius="8"
+                ClipToBounds="True">
+            <DataGrid x:Name="AccountsGrid"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      HeadersVisibility="Column"
+                      IsReadOnly="True"
+                      RowHeight="48"
+                      AlternationCount="2"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header=""
+                                        Binding="{Binding ActiveMarker}"
+                                        Width="42" />
+                    <DataGridTextColumn Header="ID"
+                                        Binding="{Binding Selector}"
+                                        Width="50" />
+                    <DataGridTextColumn Header="Account"
+                                        Binding="{Binding Email}"
+                                        Width="230" />
+                    <DataGridTextColumn Header="Plan"
+                                        Binding="{Binding Plan}"
+                                        Width="70" />
+                    <DataGridTextColumn Header="5h usage"
+                                        Binding="{Binding FiveHourUsage}"
+                                        Width="120" />
+                    <DataGridTextColumn Header="Weekly usage"
+                                        Binding="{Binding WeeklyUsage}"
+                                        Width="160" />
+                    <DataGridTemplateColumn Header="Actions"
+                                            Width="330">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal"
+                                            VerticalAlignment="Center">
+                                    <Button Content="Switch"
+                                            Style="{StaticResource PrimaryButton}"
+                                            MinWidth="60"
+                                            Padding="8,6"
+                                            Click="SwitchAccount_Click" />
+                                    <Button Content="Switch &amp; Restart"
+                                            Style="{StaticResource RestartButton}"
+                                            MinWidth="142"
+                                            Padding="8,6"
+                                            Click="SwitchAndRestartAccount_Click" />
+                                    <Button Content="Remove"
+                                            Style="{StaticResource DangerButton}"
+                                            MinWidth="62"
+                                            Padding="8,6"
+                                            Margin="0"
+                                            Click="RemoveAccount_Click" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+        <Grid Grid.Row="3" Margin="0,16,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="126" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"
+                           Text="Activity log"
+                           FontWeight="SemiBold" />
+                <TextBlock x:Name="BusyText"
+                           Grid.Column="1"
+                           Text="Ready"
+                           Foreground="{DynamicResource MutedTextBrush}" />
+            </Grid>
+            <TextBox x:Name="LogTextBox"
+                     Grid.Row="1"
+                     Margin="0,8,0,0"
+                     Padding="12"
+                     IsReadOnly="True"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto"
+                     Background="{DynamicResource LogBrush}"
+                     Foreground="{DynamicResource LogTextBrush}"
+                     BorderBrush="{DynamicResource BorderBrushSoft}"
+                     BorderThickness="1"
+                     FontFamily="Cascadia Mono, Consolas"
+                     FontSize="12" />
+        </Grid>
+    </Grid>
+</Window>
